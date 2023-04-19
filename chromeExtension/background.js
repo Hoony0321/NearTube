@@ -13,6 +13,20 @@ const getVideoInfoByAPI = async (videoId) => {
   return data;
 }
 
+const fetchCreateVideoAPI = async (videoInfo) => {
+  const host = "http://localhost:8080/api";
+
+  const response = await fetch(`${host}/videos`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(videoInfo),
+  });
+
+  console.log("server response : ", response);
+}
+
 // Listen for messages from the content script
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.message === "get_top_videos") {
@@ -21,8 +35,36 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     sendResponse({message : "receiving top video ids"});
 
     topVideoIds.forEach(async (videoId) => {
-      videoInfo = await getVideoInfoByAPI(topVideoIds[0]);
-      console.log(`${videoId} : ${videoInfo}`)
+      const data = (await getVideoInfoByAPI(videoId)).items[0];
+
+      if(data == undefined) return;
+
+      const contentDetail = data.contentDetails;
+      const snippet = data.snippet;
+      const statistics = data.statistics;
+
+      const videoInfo = {
+        id : videoId,
+        kind: data.kind,
+        categoryId: snippet.categoryId,
+
+        title: snippet.title,
+        description: snippet.description,
+        thumbnail : snippet.thumbnails.default.url,
+
+        channelId: snippet.channelId,
+        channelTitle: snippet.channelTitle,
+
+        tags: (snippet.tags).join(","),
+        duration: contentDetail.duration,
+        viewCount: statistics.viewCount,
+        likeCount: statistics.likeCount,
+        publishedAt: snippet.publishedAt,
+      }
+
+      console.log(`${videoId} : ${JSON.stringify(videoInfo)}`);
+
+      await fetchCreateVideoAPI(videoInfo);
     });
   }
 });
