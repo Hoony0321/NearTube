@@ -1,0 +1,45 @@
+{
+  
+  "name": "YouTube Top Videos",
+  "description": "Collects top YouTube videos",
+  "manifest_version": 3,
+  "version": "1.0.0",
+  "permissions": ["identity", "storage"],
+  "host_permissions": ["https://www.youtube.com/*,"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*",
+        "http://www.youtube.com/*",
+        "https://m.youtube.com/*",
+        "http://m.youtube.com/*"
+      ],
+      "js": ["getTopVideoIds.js"]
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup.html"
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [ "popup.css" ],
+      "matches": [
+        "https://www.youtube.com/*",
+        "http://www.youtube.com/*",
+        "https://m.youtube.com/*",
+        "http://m.youtube.com/*"
+      ]
+    }
+  ],
+
+  "oauth2": {
+    "client_id": "450816590365-oa6ncl113o60qvli2hg1nmuqdds76taq.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"]
+  }
+}
