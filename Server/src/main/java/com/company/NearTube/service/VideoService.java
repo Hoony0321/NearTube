@@ -22,6 +22,7 @@ public class VideoService {
         return findOne.orElse(null);
     }
 
+    @Transactional
     public void createVideo(CreateVideoForm form){
         //동일한 비디오 id 존재 시 에러 반환
         videoRepository.findById(form.getId()).ifPresent(video -> {
