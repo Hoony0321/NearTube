@@ -1,7 +1,9 @@
 package com.company.NearTube.form;
 
+import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -14,12 +16,14 @@ public class CreateVideoForm {
     private Long categoryId;
 
     private String title;
+
     private String description;
     private String thumbnail;
 
-    private Long channelId;
+    private String channelId;
     private String channelTitle;
 
+    private String tags;
     private String duration;
     private Integer viewCount;
     private Integer likeCount;

@@ -23,9 +23,11 @@ public class Video {
     private String description;
     private String thumbnail;
 
-    private Long channelId;
+    private String channelId;
     private String channelTitle;
 
+
+    private String tags;
     private String duration;
     private Integer viewCount;
     private Integer likeCount;
@@ -45,6 +47,7 @@ public class Video {
         entity.duration = form.getDuration();
         entity.viewCount = form.getViewCount();
         entity.likeCount = form.getLikeCount();
+        entity.tags = form.getTags();
         entity.publishedAt = form.getPublishedAt();
         return entity;
     }
