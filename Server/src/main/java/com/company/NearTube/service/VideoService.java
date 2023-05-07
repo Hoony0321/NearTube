@@ -17,13 +17,12 @@ public class VideoService {
     private final VideoRepository videoRepository;
 
     //TODO : 에러 처리
-    public Video findById(String id){
-        Optional<Video> findOne = videoRepository.findById(id);
-        return findOne.orElse(null);
+    public Optional<Video> findById(String id){
+        return videoRepository.findById(id);
     }
 
     @Transactional
-    public void createVideo(CreateVideoForm form){
+    public String createVideo(CreateVideoForm form){
         //동일한 비디오 id 존재 시 에러 반환
         videoRepository.findById(form.getId()).ifPresent(video -> {
             throw new IllegalStateException("이미 존재하는 비디오입니다.");
@@ -31,5 +30,7 @@ public class VideoService {
 
         Video video = Video.createEntity(form);
         videoRepository.save(video);
+
+        return video.getId();
     }
 }
