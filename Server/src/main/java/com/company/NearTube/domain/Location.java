@@ -34,4 +34,8 @@ public class Location {
         return entity;
     }
 
+    public boolean isInRange(Double latitude, Double longitude) {
+        return latitude >= minLatitude && latitude <= maxLatitude && longitude >= minLongitude && longitude <= maxLongitude;
+    }
+
 }
