@@ -19,8 +19,9 @@ public class Subscription {
     @Column(name = "subscription_id")
     private Long id;
 
-    private String channelId;
-    private String channelTitle;
+    @OneToOne
+    @JoinColumn(name = "channel_id")
+    private Channel channel;
     private LocalDateTime publishedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,11 +31,10 @@ public class Subscription {
 
     public static Subscription createEntity(CreateSubscriptionForm form) {
         Subscription entity = new Subscription();
-        entity.channelId = form.getChannelId();
-        entity.channelTitle = form.getChannelTitle();
         entity.publishedAt = form.getPublishedAt();
         return entity;
     }
 
     public void setMember(Member member) {this.member = member;}
+    public void setChannel(Channel channel) {this.channel = channel;}
 }
