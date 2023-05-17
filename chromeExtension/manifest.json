@@ -1,10 +1,9 @@
 {
-  
   "name": "YouTube Top Videos",
   "description": "Collects top YouTube videos",
   "manifest_version": 3,
   "version": "1.0.0",
-  "permissions": ["identity", "storage"],
+  "permissions": ["identity", "storage", "geolocation"],
   "host_permissions": ["https://www.youtube.com/*,"],
   "content_scripts": [
     {
@@ -28,7 +27,7 @@
 
   "web_accessible_resources": [
     {
-      "resources": [ "popup.css" ],
+      "resources": ["popup.css"],
       "matches": [
         "https://www.youtube.com/*",
         "http://www.youtube.com/*",
@@ -40,6 +39,9 @@
 
   "oauth2": {
     "client_id": "450816590365-oa6ncl113o60qvli2hg1nmuqdds76taq.apps.googleusercontent.com",
-    "scopes": ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"]
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
   }
 }

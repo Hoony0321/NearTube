@@ -1,17 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Login Popup</title>
-    <link rel="stylesheet" href="popup.css">
-  </head>
-  <body>
-    <h1>NearTube</h1>
-    <p id="loginMessage">Please sign in with your Google account:</p>
-    <button id="loginBtn">Sign in with Google</button>
-    
-    <p id="successMessage" style="display: none;">Login is successed</p>
-    <p id="email" style="display: none;">email</p>
 
-    <script src="popup.js"></script>
-  </body>
+<head>
+  <title>Login Popup</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <h1>NearTube</h1>
+  <div id="loggedOutBox" style="display: block;">
+    <p id="loginMessage">Please sign in with your Google account:</p>
+    <button id="loginBtn">Login with Google</button>
+  </div>
+
+  <div id="loggedInBox" style="display: none;">
+    <p id="successMessage" style="display: none;">Login is successed</p>
+    <p id="email">email</p>
+    <p id="location">location</p>
+    <p id="latitude">latitude</p>
+    <p id="longitude">longitude</p>
+    <button id="logoutBtn" style="background-color: crimson; ">Logout</button>
+  </div>
+
+
+
+
+  <script src="popup.js"></script>
+</body>
+
 </html>
