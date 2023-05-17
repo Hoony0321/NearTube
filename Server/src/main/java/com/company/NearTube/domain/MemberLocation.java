@@ -27,4 +27,15 @@ public class MemberLocation {
     private Location location;
 
     private Integer count = 0;
+
+    public static MemberLocation createEntity(Member member, Location location) {
+        MemberLocation entity = new MemberLocation();
+        entity.member = member;
+        entity.location = location;
+        return entity;
+    }
+
+    public void addCount() {
+        this.count++;
+    }
 }

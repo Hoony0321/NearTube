@@ -1,5 +1,6 @@
 package com.company.NearTube.form;
 
+import com.company.NearTube.domain.Channel;
 import com.company.NearTube.domain.Member;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.FetchType;
@@ -13,8 +14,6 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 public class CreateSubscriptionForm {
-
     private String channelId;
-    private String channelTitle;
     private LocalDateTime publishedAt;
 }

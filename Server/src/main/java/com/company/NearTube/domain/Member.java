@@ -57,4 +57,8 @@ public class Member {
         this.memberVideos.remove(memberVideo);
         memberVideo.setMember(null);
     }
+
+    public void addMemberLocation(MemberLocation memberLocation) {
+        this.memberLocations.add(memberLocation);
+    }
 }

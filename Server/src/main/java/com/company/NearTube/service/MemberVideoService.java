@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberVideoService {
 
     private final MemberVideoRepository memberVideoRepository;
-    private final int maxMemberVideoSize = 30;
+    private final int maxMemberVideoSize = 50;
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional
