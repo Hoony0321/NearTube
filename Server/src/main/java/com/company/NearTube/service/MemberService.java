@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +22,11 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final LocationService locationService;
 
-    public List<Member> findAll() { return memberRepository.findAll(); }
+    public List<Member> findAll() {
+        List<Member> members = memberRepository.findAll();
+        Collections.sort(members, Comparator.comparing(Member::getId));
+        return memberRepository.findAll();
+    }
 
     public Optional<Member> findById(String id){
         return memberRepository.findById(id);

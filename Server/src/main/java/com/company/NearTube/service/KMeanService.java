@@ -22,7 +22,7 @@ public class KMeanService {
     private final MemberService memberService;
     private final LocationService locationService;
 
-    public void clustering(Member targetMember){
+    public List<Member>[] clustering(){
         //create attribute - TODO : add other attributes
         List<Attribute> attributes = new ArrayList<>();
         List<Location> locations = locationService.findAll();
@@ -50,23 +50,32 @@ public class KMeanService {
             data.setDataset(dataset);
         }
 
-        //set the class index (the last attribute is the class label)
-//        dataset.setClassIndex(dataset.numAttributes() - 1);
-
         //build the clustering model
         SimpleKMeans model = new SimpleKMeans();
+        int[] assignments;
         try {
+//          model.setSeed(10);
+            model.setSeed(255);
             model.setNumClusters(3);
             model.setPreserveInstancesOrder(true);
+            model.setDisplayStdDevs(true);
             model.buildClusterer(dataset);
 
-            int[] assignments = model.getAssignments();
-            for(int i = 0; i < assignments.length; i++){
-                log.info("Instance {} -> Cluster {}\n", i, assignments[i]);
-            }
-
+            assignments = model.getAssignments();
+            log.info("std : ", model.getClusterStandardDevs());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        List<Member>[] clusters = new ArrayList[model.getNumClusters()];
+        for(int i = 0; i < clusters.length; i++){
+            clusters[i] = new ArrayList<>();
+        }
+
+        for(int i = 0; i < assignments.length; i++){
+            clusters[assignments[i]].add(members.get(i));
+        }
+
+        return clusters;
     }
 }
