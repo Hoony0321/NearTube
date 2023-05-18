@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+  <title>NearTube</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="container">
+  <div th:replace="fragments/bodyHeader :: bodyHeader" />
+  <div class="jumbotron">
+
+    <p class="h2">Member</p>
+    <p class="mt-2">
+      <button class="btn btn-lg btn-secondary" href="/members">회원 목록</button>
+    </p>
+
+    <p class="h2 mt-4">Video</p>
+    <p>
+      <button class="btn btn-lg btn-secondary" href="/members/new">비디오 전체 목록</button>
+      <button class="btn btn-lg btn-secondary" href="/members">비디오 회원 목록</button>
+    </p>
+
+    <p class="h2 mt-4">Channel</p>
+    <p class="mt-2">
+      <button class="btn btn-lg btn-secondary" href="/members/new">채널 전체 목록</button>
+      <button class="btn btn-lg btn-secondary" href="/members">채널 회원 목록</button>
+    </p>
+
+    <p class="h2 mt-4">Location</p>
+    <p class="mt-2">
+      <button class="btn btn-lg btn-secondary" href="/members/new">장소 전체 목록</button>
+      <button class="btn btn-lg btn-secondary" href="/members">장소 회원 목록</button>
+    </p>
+
+    <p class="h2 mt-4">Clustering</p>
+    <p>
+      <a class="btn btn-lg btn-secondary" href="/members">K-Means</a>
+      <a class="btn btn-lg btn-secondary" href="/members">Mean-Shift</a>
+    </p>
+    <p>
+      <a class="btn btn-lg btn-secondary" href="/members">Density-Based Spatial</a>
+      <a class="btn btn-lg btn-secondary" href="/members">Expectation-Maximization</a>
+    </p>
+    <p>
+      <a class="btn btn-lg btn-secondary" href="/members">Agglomerative Hierarchical</a>
+    </p>
+  </div>
+  <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>
