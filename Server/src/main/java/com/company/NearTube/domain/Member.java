@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Entity
@@ -24,7 +26,10 @@ public class Member {
 
     private String picture;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private String major;
+    private String interests;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Subscription> subscriptions = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -60,5 +65,12 @@ public class Member {
 
     public void addMemberLocation(MemberLocation memberLocation) {
         this.memberLocations.add(memberLocation);
+    }
+
+    public List<MemberLocation> getTopMemberLocation(int i) {
+        List<MemberLocation> memberLocations = this.getMemberLocations();
+        Collections.sort(memberLocations, Comparator.comparing(MemberLocation::getCount).reversed());
+
+        return memberLocations.subList(0, i);
     }
 }
