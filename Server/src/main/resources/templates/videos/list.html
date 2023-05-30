@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>NearTube</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-$END$
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <h1>Video list</h1>
+    <table class="table text-center table-striped w-100">
+        <thead class="thead-dark w-100">
+        <tr >
+            <th>id</th>
+            <th>category</th>
+            <th>channel</th>
+            <th>title</th>
+            <th>description</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="video : ${videos}">
+                <td th:text="${(video.id.length() > 10) ? video.id.substring(0,10) : video.id}"></td>
+                <td th:text="${video.categoryId}"></td>
+                <td th:text="${video.channelId}"></td>
+                <td th:text="${video.title}"></td>
+                <td th:text="${video.description}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
 </body>
 </html>

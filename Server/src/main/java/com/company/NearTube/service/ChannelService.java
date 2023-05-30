@@ -38,6 +38,7 @@ public class ChannelService {
     public List<Channel> createChannel(List<String> ids){
         //기존에 없던 새로운 채널 아이디만 사용
         ids = ids.stream().filter(id -> channelRepository.findById(id).isEmpty()).collect(Collectors.toList());
+        if(ids.size() == 0) return new ArrayList<>();
 
         JSONArray items = getChannelInfo(ids);
         List<Channel> channels = new ArrayList<>();
@@ -103,5 +104,9 @@ public class ChannelService {
         }catch (Exception e) {
             throw new IllegalStateException("JSON Object 변환 실패");
         }
+    }
+
+    public List<Channel> findAll() {
+        return channelRepository.findAll();
     }
 }

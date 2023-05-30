@@ -62,7 +62,6 @@ public class KMeanService {
             model.buildClusterer(dataset);
 
             assignments = model.getAssignments();
-            log.info("std : ", model.getClusterStandardDevs());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

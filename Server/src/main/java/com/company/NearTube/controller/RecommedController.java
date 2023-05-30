@@ -1,8 +1,8 @@
 package com.company.NearTube.controller;
 
 import com.company.NearTube.domain.Member;
-import com.company.NearTube.dto.MemberSimpleDto;
-import com.company.NearTube.service.KMeanService;
+import com.company.NearTube.dto.ClusterDto;
+
 import com.company.NearTube.service.MemberService;
 import com.company.NearTube.service.RecommendService;
 import lombok.RequiredArgsConstructor;
@@ -29,11 +29,10 @@ public class RecommedController {
         if(findOne.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-
         Member targetMember = findOne.get();
-        List<Member> targetCluster = recommendService.recommendOnlyLocation(targetMember);
-        List<MemberSimpleDto> memberSimpleDtos = MemberSimpleDto.createDtos(targetCluster);
 
-        return ResponseEntity.ok(memberSimpleDtos);
+        ClusterDto clusterDto = recommendService.recommendOnlyLocation(targetMember);
+
+        return ResponseEntity.ok(clusterDto);
     }
 }

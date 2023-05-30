@@ -73,4 +73,16 @@ public class Member {
 
         return memberLocations.subList(0, i);
     }
+
+    public String getTopMemberLocationString(int i) {
+        List<MemberLocation> memberLocations = this.getMemberLocations();
+        Collections.sort(memberLocations, Comparator.comparing(MemberLocation::getCount).reversed());
+
+        String result = "";
+        for(MemberLocation memberLocation : memberLocations.subList(0,i)){
+            result += memberLocation.getLocation().getName() + " " + memberLocation.getCount().toString() + "회\n";
+        }
+
+        return result;
+    }
 }

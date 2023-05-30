@@ -1,10 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>NearTube</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-$END$
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <h1>Member Information</h1>
+    <p>ID : <span th:text="${member.id}"/></p>
+    <p>NAME : <span th:text="${member.name}"/></p>
+    <p>MAJOR : <span th:text="${member.major}"/></p>
+    <p>INTERESTS : <span th:text="${member.interests}"/></p>
+    <p>TOP LOCATION : <span th:text="${member.getTopMemberLocationString(3)}"/></p>
+    <br/>
+    <br/>
+    <h1>Cluster Information</h1>
+    <p>CLUSTER ID : <span th:text="${cluster.clusterId}"/></p>
+    <br/>
+    <br/>
+    <h2>Members</h2>
+    <ul th:each="member : ${cluster.members}">
+        <li>
+            <p>NAME : <span th:text="${member.name}"/></p>
+            <p>MAJOR : <span th:text="${member.major}"/></p>
+            <p>INTERESTS : <span th:text="${member.interests}"/></p>
+            <p>TOP LOCATION :
+                <ul th:each="location : ${member.locations}">
+                    <li><span th:text="${location.name}"/> <span th:text="${location.count}"/></li>
+                </ul>
+            </p>
+        </li>
+    </ul>
+    <br/>
+    <br/>
+    <h2>Locations</h2>
+    <ul th:each="location : ${cluster.locations}">
+        <li>
+            <span th:text="${location.getKey().name}"/>
+            <span th:text="${location.getValue()}"/>
+        </li>
+    </ul>
+    <br/>
+    <br/>
+    <h2>Videos</h2>
+    <ul th:each="video : ${cluster.videos}">
+        <li>
+            <span th:text="${video.getKey().title}"/>
+            <span th:text="${video.getValue()}"/>
+        </li>
+    </ul>
+
+    <br/>
+    <br/>
+
+    <h2>Channels</h2>
+    <ul th:each="channel : ${cluster.channels}">
+        <li>
+            <span th:text="${channel.getKey().title}"/>
+            <span th:text="${channel.getKey().categories}"/>
+            <span th:text="${channel.getValue()}"/>
+        </li>
+    </ul>
+
+
+
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
 </body>
 </html>

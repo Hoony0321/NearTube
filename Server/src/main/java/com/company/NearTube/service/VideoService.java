@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,5 +33,9 @@ public class VideoService {
         videoRepository.save(video);
 
         return video.getId();
+    }
+
+    public List<Video> findAll() {
+        return videoRepository.findAll();
     }
 }

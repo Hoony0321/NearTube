@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>NearTube</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-$END$
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <h1>Location list</h1>
+    <table class="table text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="location : ${locations}">
+                <td th:text="${location.id}"></td>
+                <td th:text="${location.name}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
 </body>
 </html>

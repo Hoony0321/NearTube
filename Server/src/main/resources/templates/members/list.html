@@ -7,38 +7,33 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
-    <div class="jumbotron">
+    <h1>Member list</h1>
+    <table class="table text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+            <th scope="col">top location</th>
+            <th scope="col">major</th>
+            <th scope="col">interests</th>
+            <th scope="col">detail</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="member : ${members}">
+                <td th:text="${member.id}"></td>
+                <td th:text="${member.name}"></td>
+                <td style="white-space: pre" th:text="${member.getTopMemberLocationString(3)}"></td>
+                <td th:text="${member.major}"></td>
+                <td th:text="${member.interests}"></td>
+                <td>
+                    <a href="#" th:href="@{/members/{id}/recommend (id=${member.id})}"
+                       class="btn btn-primary" role="button">상세보기</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-        <p class="h2">Member</p>
-        <p class="mt-2">
-            <button class="btn btn-lg btn-secondary" href="/members">회원 목록</button>
-        </p>
-
-        <p class="h2 mt-4">Video</p>
-        <p>
-            <button class="btn btn-lg btn-secondary" href="/videos">비디오 목록</button>
-        </p>
-
-        <p class="h2 mt-4">Channel</p>
-        <p class="mt-2">
-            <button class="btn btn-lg btn-secondary" href="/channels">채널 목록</button>
-        </p>
-
-        <p class="h2 mt-4">Location</p>
-        <p class="mt-2">
-            <button class="btn btn-lg btn-secondary" href="/locations">장소 목록</button>
-        </p>
-
-        <p class="h2 mt-4">Clustering</p>
-        <p>
-            <a class="btn btn-lg btn-secondary" href="/members">K-Means</a>
-            <a class="btn btn-lg btn-secondary" href="/members">Mean-Shift</a>
-        </p>
-        <p>
-            <a class="btn btn-lg btn-secondary" href="/members">Density-Based Spatial</a>
-            <a class="btn btn-lg btn-secondary" href="/members">Expectation-Maximization</a>
-        </p>
-    </div>
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
 </body>
