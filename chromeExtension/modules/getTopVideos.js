@@ -1,4 +1,4 @@
-function getTopVideos() {
+function fetchTopVideos() {
   const videos = document.querySelectorAll("#contents ytd-rich-item-renderer");
   const videoArray = Array.from(videos);
   const topVideoIds = [];
@@ -14,7 +14,7 @@ function getTopVideos() {
   return topVideoIds;
 }
 
-function getMobileTopVideos() {
+function fetchMobileTopVideos() {
   const videos = document.querySelectorAll("ytm-rich-item-renderer");
   const videoArray = Array.from(videos);
   const topVideoIds = [];
@@ -29,7 +29,7 @@ function getMobileTopVideos() {
   return topVideoIds;
 }
 
-const main = () => {
+export const getTopVideos = () => {
   window.onload = function () {
     console.log("get_top_videos 실행");
     const currentUrl = window.location.href;
@@ -37,9 +37,9 @@ const main = () => {
 
     // get top video ids
     if (currentUrl.includes("m.youtube.com")) {
-      topVideoIds = getMobileTopVideos();
+      topVideoIds = fetchMobileTopVideos();
     } else if (currentUrl.includes("youtube.com")) {
-      topVideoIds = getTopVideos();
+      topVideoIds = fetchTopVideos();
     }
 
     console.log("topVideoIds : ", topVideoIds);
@@ -50,5 +50,3 @@ const main = () => {
     );
   };
 };
-
-main();

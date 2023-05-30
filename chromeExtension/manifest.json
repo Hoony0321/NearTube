@@ -13,7 +13,8 @@
         "https://m.youtube.com/*",
         "http://m.youtube.com/*"
       ],
-      "js": ["getTopVideoIds.js"]
+      "js": ["content.js"],
+      "css": ["content.css"]
     }
   ],
 
@@ -22,12 +23,13 @@
   },
 
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
 
   "web_accessible_resources": [
     {
-      "resources": ["popup.css"],
+      "resources": ["popup.css", "modules/**", "content_main.js"],
       "matches": [
         "https://www.youtube.com/*",
         "http://www.youtube.com/*",

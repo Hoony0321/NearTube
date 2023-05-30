@@ -1,32 +1,5 @@
-const API_KEY = "AIzaSyBBOiLRjYI1zBufrBflw5XLlYaPF2ukdaw";
-
-const getVideoInfoByAPI = async (videoId) => {
-  console.log("getVideoInfoByAPI 실행");
-  // Make the API request to retrieve video information
-  const baseUrl = "https://www.googleapis.com/youtube/v3/videos";
-  const apiUrl = `${baseUrl}?key=${API_KEY}&part=snippet,contentDetails,statistics&id=${videoId}`;
-
-  const response = await fetch(apiUrl);
-  const data = await response.json();
-
-  console.log("data : ", data);
-
-  return data;
-};
-
-const fetchCreateMemberVideoAPI = async (memberId, videoInfo) => {
-  console.log("****** execute create member video api******");
-  const host = "http://localhost:8080/api";
-  const response = await fetch(`${host}/members/${memberId}/videos`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(videoInfo),
-  });
-
-  console.log("server response : ", response);
-};
+import { fetchCreateMemberVideoAPI } from "./modules/backendAPI.js";
+import { getVideoInfoByAPI } from "./modules/youtubeAPI.js";
 
 // Listen for messages from the content script
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -89,5 +62,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log("logged out");
     // Do something when the user is logged in
     // ...
+  }
+});
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.message === "get_videos_info") {
+    const topVideoIds = request.topVideoIds;
+    sendResponse({ message: "receiving top video ids2" });
+
+    topVideoIds.forEach(async (videoId) => {
+      videoInfo = await getVideoInfoByAPI(topVideoIds[0]);
+      console.log(`${videoId} : ${videoInfo}`);
+    });
   }
 });

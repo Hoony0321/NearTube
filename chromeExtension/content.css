@@ -1,0 +1,65 @@
+#neartube-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#neartube-logo-title {
+  font-size: 3rem;
+  font-weight: 900;
+  padding: 1rem;
+}
+
+.neartube-content-container {
+  display: flex;
+  width: 100%;
+  padding: auto;
+  flex-direction: column;
+}
+
+.neartube-content-box {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  white-space: nowrap;
+  gap: 2.5rem;
+}
+
+.neartube-xlarge-text {
+  font-size: 2rem;
+  font-weight: 900;
+  padding: 1rem;
+}
+
+.neartube-large-text {
+  font-size: 1.5rem;
+  font-weight: 900;
+  padding: 1rem;
+}
+
+.neartube-medium-text {
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 1rem;
+  word-wrap: break-word;
+}
+
+.neartube-small-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 1rem;
+}
+
+.neartube-video-item {
+  min-width: 300px;
+}
+
+.neartube-video-item > img {
+  border-radius: 15px;
+}
+
+.neartube-channel-item {
+  min-width: 200px;
+  border: 1px solid black;
+  border-radius: 15px;
+}
