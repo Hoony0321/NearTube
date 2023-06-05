@@ -1,6 +1,7 @@
 package com.company.NearTube.domain;
 
 import com.company.NearTube.form.CreateMemberForm;
+import com.company.NearTube.form.SetMemberDetailInfoForm;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,8 +27,9 @@ public class Member {
 
     private String picture;
 
-    private String major;
+    private String job;
     private String interests;
+    private Boolean gender;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Subscription> subscriptions = new ArrayList<>();
@@ -44,9 +46,11 @@ public class Member {
         entity.name = form.getName();
         entity.email = form.getEmail();
         entity.picture = form.getPicture();
+        entity.job = form.getJob();
+        entity.gender = form.getGender();
+        entity.interests = form.getInterests();
         return entity;
     }
-
     public void addSubscription(Subscription subscription) {
         this.subscriptions.add(subscription);
         subscription.setMember(this);

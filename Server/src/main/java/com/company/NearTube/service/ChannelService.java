@@ -47,10 +47,12 @@ public class ChannelService {
             JSONObject channelInfo = (JSONObject) items.get(i);
             JSONObject snippet = (JSONObject) channelInfo.get("snippet");
             JSONObject topicDetails = (JSONObject) channelInfo.get("topicDetails");
+            JSONObject thumbnail = (JSONObject) ((JSONObject) snippet.get("thumbnails")).get("high");
 
             String channelId = (String) channelInfo.get("id");
             String title = (String) snippet.get("title");
             String description = (String) snippet.get("description");
+            String thumbnailUrl = (String) thumbnail.get("url");
 
             String categories = "";
             if(topicDetails != null){
@@ -65,13 +67,49 @@ public class ChannelService {
             }
 
 
-            CreateChannelForm createChannelForm = new CreateChannelForm(channelId, title, description, categories);
+            CreateChannelForm createChannelForm = new CreateChannelForm(channelId, title, description, categories, thumbnailUrl);
             Channel channel = Channel.createEntity(createChannelForm);
             channels.add(channel);
         }
 
         if(channels.size() > 0) channelRepository.saveAll(channels);
         return channels;
+    }
+
+    @Transactional
+    public void updateChannelInfo(){
+        List<Channel> all = channelRepository.findAll();
+
+        List<String> ids = new ArrayList<>();
+        for(Channel channel : all){
+            ids.add(channel.getId());
+        }
+        JSONArray channelInfos = getChannelInfo(ids);
+
+        for(int i = 0; i < all.size(); i++){
+            JSONObject channelInfo = (JSONObject) channelInfos.get(i);
+            JSONObject snippet = (JSONObject) channelInfo.get("snippet");
+            JSONObject topicDetails = (JSONObject) channelInfo.get("topicDetails");
+            JSONObject thumbnail = (JSONObject) ((JSONObject) snippet.get("thumbnails")).get("high");
+
+            String channelId = (String) channelInfo.get("id");
+            String title = (String) snippet.get("title");
+            String description = (String) snippet.get("description");
+            String thumbnailUrl = (String) thumbnail.get("url");
+            String categories = "";
+            if(topicDetails != null){
+                List<String> topicCategories = (List<String>) topicDetails.get("topicCategories");
+                if(topicCategories != null){
+                    for(String topicCategory : topicCategories){
+                        String[] parts = topicCategory.split("/");
+                        String topicCategoryName = parts[parts.length - 1];
+                        categories += topicCategoryName + ",";
+                    }
+                }
+            }
+
+            all.get(i).updateInfo(title, description, categories, thumbnailUrl);
+        }
     }
 
     private JSONArray getChannelInfo(List<String> ids){

@@ -14,10 +14,13 @@ public class ChannelDto {
     private String description;
     private String categories;
 
+    private String thumbnail;
+
     static public ChannelDto createDto(Channel channel) {
         ChannelDto dto = new ChannelDto();
         dto.id = channel.getId();
         dto.title = channel.getTitle();
+        dto.thumbnail = channel.getThumbnail();
         dto.description = channel.getDescription();
         dto.categories = channel.getCategories();
         return dto;

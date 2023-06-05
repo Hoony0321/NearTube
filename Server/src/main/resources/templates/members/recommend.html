@@ -10,7 +10,7 @@
     <h1>Member Information</h1>
     <p>ID : <span th:text="${member.id}"/></p>
     <p>NAME : <span th:text="${member.name}"/></p>
-    <p>MAJOR : <span th:text="${member.major}"/></p>
+    <p>JOB : <span th:text="${member.job}"/></p>
     <p>INTERESTS : <span th:text="${member.interests}"/></p>
     <p>TOP LOCATION : <span th:text="${member.getTopMemberLocationString(3)}"/></p>
     <br/>
@@ -23,7 +23,7 @@
     <ul th:each="member : ${cluster.members}">
         <li>
             <p>NAME : <span th:text="${member.name}"/></p>
-            <p>MAJOR : <span th:text="${member.major}"/></p>
+            <p>JOB : <span th:text="${member.job}"/></p>
             <p>INTERESTS : <span th:text="${member.interests}"/></p>
             <p>TOP LOCATION :
                 <ul th:each="location : ${member.locations}">

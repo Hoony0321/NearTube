@@ -11,10 +11,13 @@ public class CreateChannelForm {
     private String description;
     private String categories;
 
-    public CreateChannelForm(String id, String title, String description, String categories) {
+    private String thumbnail;
+
+    public CreateChannelForm(String id, String title, String description, String categories, String thumbnail) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.categories = categories;
+        this.thumbnail = thumbnail;
     }
 }

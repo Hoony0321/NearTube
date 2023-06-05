@@ -4,6 +4,7 @@ import com.company.NearTube.domain.Location;
 import com.company.NearTube.domain.Member;
 import com.company.NearTube.domain.MemberLocation;
 import com.company.NearTube.form.CreateMemberForm;
+import com.company.NearTube.form.SetMemberDetailInfoForm;
 import com.company.NearTube.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,5 +47,10 @@ public class MemberService {
         }
 
         memberRepository.save(member);
+    }
+
+    @Transactional
+    public void deleteMember(String id) {
+        memberRepository.deleteById(id);
     }
 }

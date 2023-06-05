@@ -15,16 +15,22 @@ import java.util.Map;
 public class ClusterDto {
 
     int clusterId;
+
+    List<String> mainLocations;
+    List<String> mainCategories;
+    String mainJob;
+
     List<MemberSimpleDto> members;
     List<VideoDto> videos;
     List<ChannelDto> channels;
-    List<LocationDto> locations;
 
-    public ClusterDto(int clusterId, List<MemberSimpleDto> members, List<VideoDto> videos, List<ChannelDto> channels, List<LocationDto> locations) {
-        this.clusterId = clusterId;
-        this.members = members;
-        this.videos = videos;
-        this.channels = channels;
-        this.locations = locations;
+    public ClusterDto(int targetClusterId, List<MemberSimpleDto> membersDto, List<VideoDto> recommendVideosDto, List<ChannelDto> recommendChannelsDto, List<String> mainLocations, List<String> mainCategories, String mainJob) {
+        this.clusterId = targetClusterId;
+        this.members = membersDto;
+        this.videos = recommendVideosDto;
+        this.channels = recommendChannelsDto;
+        this.mainLocations = mainLocations;
+        this.mainCategories = mainCategories;
+        this.mainJob = mainJob;
     }
 }

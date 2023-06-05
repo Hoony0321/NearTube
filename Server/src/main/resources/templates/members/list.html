@@ -14,7 +14,7 @@
             <th scope="col">id</th>
             <th scope="col">name</th>
             <th scope="col">top location</th>
-            <th scope="col">major</th>
+            <th scope="col">job</th>
             <th scope="col">interests</th>
             <th scope="col">detail</th>
         </tr>
@@ -24,7 +24,7 @@
                 <td th:text="${member.id}"></td>
                 <td th:text="${member.name}"></td>
                 <td style="white-space: pre" th:text="${member.getTopMemberLocationString(3)}"></td>
-                <td th:text="${member.major}"></td>
+                <td th:text="${member.job}"></td>
                 <td th:text="${member.interests}"></td>
                 <td>
                     <a href="#" th:href="@{/members/{id}/recommend (id=${member.id})}"

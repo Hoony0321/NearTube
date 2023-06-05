@@ -5,14 +5,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CreateMemberForm {
-
-    private String id;
-    private String name;
-    private String email;
-    private String picture;
+public class SetMemberDetailInfoForm {
     private String job;
     private String interests;
     private Boolean gender;
-
 }

@@ -3,7 +3,7 @@ package com.company.NearTube.page;
 import com.company.NearTube.domain.Member;
 import com.company.NearTube.dto.ClusterDto;
 import com.company.NearTube.service.MemberService;
-import com.company.NearTube.service.RecommendService;
+import com.company.NearTube.service.ClusterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/members")
 public class MemberPageController {
     private final MemberService memberService;
-    private final RecommendService recommendService;
+    private final ClusterService clusterService;
 
     @RequestMapping("")
     public String memberList(Model model){
@@ -30,7 +30,7 @@ public class MemberPageController {
     @RequestMapping("/{id}/recommend")
     public String memberRecommend(@PathVariable("id") String id, Model model){
         Member member = memberService.findById(id).get();
-        ClusterDto cluster = recommendService.recommendOnlyLocation(member);
+        ClusterDto cluster = clusterService.clusterByLocation(member);
         model.addAttribute("member", member);
         model.addAttribute("cluster", cluster);
 
