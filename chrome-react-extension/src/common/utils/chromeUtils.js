@@ -1,5 +1,5 @@
 import { resolve } from "path";
-import { getMemberAPI, createMemberAPI } from "./backendUtils.js";
+import { getMemberAPI } from "./backendUtils.js";
 
 const SCOPES = [
   "https://www.googleapis.com/auth/userinfo.email",
@@ -56,7 +56,7 @@ export const getTokenWithId = async () => {
         };
 
         resolve({
-          id: userInfo.id,
+          userData: userInfo,
           token: token,
           isNew: (await getMemberAPI(userInfo.id)) == null,
         });

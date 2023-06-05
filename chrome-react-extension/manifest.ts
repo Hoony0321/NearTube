@@ -24,10 +24,11 @@ const manifest: chrome.runtime.ManifestV3 = {
   content_scripts: [
     {
       matches: [
-        "https://www.youtube.com/*",
-        "http://www.youtube.com/*",
-        "https://m.youtube.com/*",
-        "http://m.youtube.com/*",
+        "https://www.youtube.com/",
+        "http://www.youtube.com/",
+        "https://m.youtube.com/",
+        "http://m.youtube.com/",
+        "https://www.youtube.com/?app=desktop",
       ],
       js: ["src/pages/content/index.js"],
       // KEY for cache invalidation
@@ -42,6 +43,8 @@ const manifest: chrome.runtime.ManifestV3 = {
         "assets/css/*.css",
         "icon-128.png",
         "icon-34.png",
+        "assets/svg/*.svg",
+        "assets/png/*.png",
       ],
       matches: ["*://*/*"],
     },

@@ -1,29 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, FC } from "react";
 import SignUp from "./components/SignUpPage.js";
 import "@pages/popup/Popup.css";
 import { IUser } from "../../common/interfaces.js";
 import LoginPage from "./components/LoginPage.js";
 import HomePage from "./components/HomePage.js";
 
-const Popup = () => {
+const Popup: FC<{ propsUser: IUser }> = ({ propsUser }) => {
   const [user, setUser] = useState<IUser>(undefined);
-  const [showSignUpPage, setShowSignUpPage] = useState<boolean>(false);
 
-  const clickLogoutBtn = () => {
+  useEffect(() => {
+    console.log("popup init");
+    console.log("propsUser : ", propsUser);
+    if (propsUser != null && propsUser != undefined) {
+      setUser(propsUser);
+    }
+  }, []);
+
+  const clickLogoutBtn = async () => {
+    console.log("logout");
     setUser(undefined);
-    chrome.storage.local.set({
-      user: undefined,
+    await chrome.storage.local.set({
+      user: null,
     });
   };
 
   return (
     <div className="container">
       {user == undefined ? (
-        <LoginPage user={user} setUser={setUser} />
+        <LoginPage setUser={setUser} />
       ) : (
         <HomePage clickLogoutBtn={clickLogoutBtn} user={user} />
       )}
-      {showSignUpPage && <SignUp />}
     </div>
   );
 };

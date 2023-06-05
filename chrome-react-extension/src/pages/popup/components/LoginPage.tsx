@@ -9,39 +9,49 @@ import {
   getMemberAPI,
   createSubscriptionAPI,
   countMemberLocationAPI,
+  createMemberAPI,
 } from "../../../common/utils/backendUtils.js";
+import { IUser } from "@src/common/interfaces.js";
 
-const LoginPage: FC<{ user; setUser }> = ({ user, setUser }) => {
+const LoginPage: FC<{ setUser }> = ({ setUser }) => {
   const [showSignUpPage, setShowSignUpPage] = useState<boolean>(false);
-  const [major, setMajor] = useState<string>("");
   const [gender, setGender] = useState<string>("");
   const [interests, setInterests] = useState<string>("");
   const [job, setJob] = useState<string>("");
+  const [userData, setUserData] = useState(undefined);
 
   const clickLoginBtn = async () => {
     await getTokenWithId()
-      .then(async ({ id, token, isNew }) => {
+      .then(async ({ userData, token, isNew }) => {
+        setUserData(userData);
         if (isNew) {
           setShowSignUpPage(true);
           return;
         }
 
         //유저 정보 서버에서 가져오기
-        const userInfo = await getMemberAPI(id);
+        const userInfo = await getMemberAPI(userData.id);
         console.log(userInfo);
 
         //구독 목록 정보 가져와서 저장
-        const subscriptions = await getYoutubeSubscriptionsAPI(token, id);
+        const subscriptions = await getYoutubeSubscriptionsAPI(
+          token,
+          userData.id
+        );
         if (subscriptions != undefined && subscriptions.length > 0) {
-          await createSubscriptionAPI(id, subscriptions);
+          await createSubscriptionAPI(userData.id, subscriptions);
         }
 
         //위치 정보 가져와서 저장
         const { latitude, longitude } = await getCurrentLocation();
-        const location = await countMemberLocationAPI(id, latitude, longitude);
+        const location = await countMemberLocationAPI(
+          userData.id,
+          latitude,
+          longitude
+        );
 
         // set user
-        await setUser((prev) => ({
+        const user: IUser = {
           id: userInfo.id,
           email: userInfo.email,
           name: userInfo.name,
@@ -49,8 +59,11 @@ const LoginPage: FC<{ user; setUser }> = ({ user, setUser }) => {
             location.locationName == "NONE"
               ? "위치 정보 없음"
               : location.locationName,
-          major: userInfo.major,
+          job: userInfo.job,
           interests: userInfo.interests,
+        };
+        await setUser(() => ({
+          ...user,
         }));
 
         // set user to chrome storage
@@ -64,6 +77,20 @@ const LoginPage: FC<{ user; setUser }> = ({ user, setUser }) => {
   };
 
   const clickSubmitBtn = async () => {
+    console.log("clickSubmitBtn");
+    const userInfo = {
+      id: userData.id,
+      email: userData.email,
+      name: userData.name,
+      picture: userData.picture,
+      gender: gender == "남자" ? true : false,
+      job: job,
+      interests: interests,
+    };
+
+    console.log("userInfo : ", userInfo);
+    await createMemberAPI(userInfo);
+
     setShowSignUpPage(false);
   };
 
@@ -80,10 +107,10 @@ const LoginPage: FC<{ user; setUser }> = ({ user, setUser }) => {
             <input
               className="input"
               type="text"
-              placeholder="Major"
+              placeholder="Job"
               onChange={(e) => {
                 () => {
-                  setMajor(e.target.value);
+                  setJob(e.target.value);
                 };
               }}
             />
@@ -100,24 +127,13 @@ const LoginPage: FC<{ user; setUser }> = ({ user, setUser }) => {
             <input
               className="input"
               type="text"
-              placeholder="Job"
-              onChange={(e) => {
-                () => {
-                  setJob(e.target.value);
-                };
-              }}
-            />
-            <input
-              className="input"
-              type="text"
-              placeholder="Interests"
+              placeholder="interests"
               onChange={(e) => {
                 () => {
                   setInterests(e.target.value);
                 };
               }}
             />
-
             <div className="btn-container">
               <button className="btn" onClick={clickCancelBtn}>
                 Cancel

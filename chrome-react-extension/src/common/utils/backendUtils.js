@@ -14,6 +14,7 @@ export const getMemberAPI = async (id) => {
 };
 
 export const createMemberAPI = async (memberInfo) => {
+  console.log("execute createMemberAPI");
   const response = await fetch(`${host}/api/members`, {
     method: "POST",
     headers: {
@@ -23,10 +24,9 @@ export const createMemberAPI = async (memberInfo) => {
   });
 
   if (response.status != 200) {
-    return null;
+    alert("회원가입에 실패했습니다.");
   } else {
-    const data = await response.json();
-    return data;
+    alert("회원가입에 성공했습니다.");
   }
 };
 
@@ -66,5 +66,34 @@ export const countMemberLocationAPI = async (id, latitude, longitude) => {
     return data;
   } else {
     console.log("count member location fail");
+  }
+};
+
+export const getClusterAPI = async (id) => {
+  const response = await fetch(`${host}/api/members/${id}/cluster`, {
+    method: "GET",
+  });
+
+  if (response.status != 200) {
+    return null;
+  } else {
+    const data = await response.json();
+    return data;
+  }
+};
+
+export const searchClusterAPI = async (location, job) => {
+  const response = await fetch(
+    `${host}/api/clusters/search?location=${location}&job=${job}`,
+    {
+      method: "GET",
+    }
+  );
+
+  if (response.status != 200) {
+    return null;
+  } else {
+    const data = await response.json();
+    return data;
   }
 };

@@ -16,7 +16,7 @@ const HomePage: FC<{ user; clickLogoutBtn }> = ({ user, clickLogoutBtn }) => {
             <b>location</b> : {user.location}
           </div>
           <div className="user-major">
-            <b>major</b> : {user.major}
+            <b>job</b> : {user.job}
           </div>
           <div className="user-grade">
             <b>interests</b> : {user.interests}

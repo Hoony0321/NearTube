@@ -11,8 +11,11 @@ function init() {
   if (!appContainer) {
     throw new Error("Can not find #app-container");
   }
-  const root = createRoot(appContainer);
-  root.render(<Popup />);
+
+  chrome.storage.local.get(["user"], (result) => {
+    const root = createRoot(appContainer);
+    root.render(<Popup propsUser={result.user} />);
+  });
 }
 
 init();
