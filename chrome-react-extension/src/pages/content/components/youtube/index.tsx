@@ -1,8 +1,11 @@
 import { createRoot } from "react-dom/client";
 import App from "@src/pages/content/components/youtube/app";
 import refreshOnUpdate from "virtual:reload-on-update-in-view";
+import { getTopVideos } from "@src/common/utils/youtubeUtils";
 
 refreshOnUpdate("pages/content");
+
+getTopVideos();
 
 if (window.location.hostname === "www.youtube.com") {
   //데스크탑인 경우

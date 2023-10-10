@@ -32,13 +32,14 @@
             </p>
         </li>
     </ul>
+    <h2>Locations</h2>
+    <p th:text="${cluster.mainJob}"/>
     <br/>
     <br/>
     <h2>Locations</h2>
-    <ul th:each="location : ${cluster.locations}">
+    <ul th:each="location : ${cluster.mainLocations}">
         <li>
-            <span th:text="${location.getKey().name}"/>
-            <span th:text="${location.getValue()}"/>
+            <span th:text="${location}"/>
         </li>
     </ul>
     <br/>
@@ -46,8 +47,7 @@
     <h2>Videos</h2>
     <ul th:each="video : ${cluster.videos}">
         <li>
-            <span th:text="${video.getKey().title}"/>
-            <span th:text="${video.getValue()}"/>
+            <span th:text="${video.title}"/>
         </li>
     </ul>
 
@@ -57,9 +57,7 @@
     <h2>Channels</h2>
     <ul th:each="channel : ${cluster.channels}">
         <li>
-            <span th:text="${channel.getKey().title}"/>
-            <span th:text="${channel.getKey().categories}"/>
-            <span th:text="${channel.getValue()}"/>
+            <span th:text="${channel.title}"/>
         </li>
     </ul>
 

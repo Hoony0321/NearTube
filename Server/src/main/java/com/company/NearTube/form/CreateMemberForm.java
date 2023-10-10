@@ -14,5 +14,6 @@ public class CreateMemberForm {
     private String job;
     private String interests;
     private Boolean gender;
+    private String[] locations;
 
 }

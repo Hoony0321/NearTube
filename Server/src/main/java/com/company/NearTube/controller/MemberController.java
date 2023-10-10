@@ -32,7 +32,7 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/api/members/{id}")
+    @PostMapping("/api/members/{id}/delete")
     public ResponseEntity<Object> deleteMember(@PathVariable("id") String id){
         memberService.deleteMember(id);
         return ResponseEntity.ok().build();

@@ -64,8 +64,10 @@ const App = () => {
   const setContent = async () => {
     // get cluser info from server
     const data = await getClusterAPI(user.id);
+    if (data == undefined || data == null) {
+      return;
+    }
 
-    console.log(data);
     setChannels(data.channels);
     setVideos(data.videos);
 
@@ -79,9 +81,6 @@ const App = () => {
   };
 
   const clickSearchButton = async () => {
-    console.log(selectedLocation);
-    console.log(selectedJob);
-
     const data = await searchClusterAPI(selectedLocation, selectedJob);
 
     if (data == undefined || data == null) {

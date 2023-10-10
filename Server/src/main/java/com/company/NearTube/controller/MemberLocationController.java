@@ -8,6 +8,7 @@ import com.company.NearTube.form.Point;
 import com.company.NearTube.service.MemberLocationService;
 import com.company.NearTube.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class MemberLocationController {
     private final MemberService memberService;
     private final MemberLocationService memberLocationService;
@@ -30,6 +32,8 @@ public class MemberLocationController {
         }
         Member member = findOne.get();
         Point point = new Point(form.getLatitude(), form.getLongitude());
+
+        log.info("member: {}, point: {}", member, point);
 
         MemberLocation memberLocation = memberLocationService.countMemberLocation(member, point);
         MemberLocationResponse response = null;

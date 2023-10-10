@@ -18,8 +18,7 @@ export const getCurrentLocation = async () => {
     });
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
-    console.log("latitude : ", latitude);
-    console.log("longitude : ", longitude);
+    console.log(`현위치 정보: ${latitude} ${longitude}`);
     return { latitude: latitude, longitude: longitude };
   } else {
     alert("위치 정보를 허용해주세요.");
@@ -29,7 +28,6 @@ export const getCurrentLocation = async () => {
 
 export const getTokenWithId = async () => {
   return new Promise((resolve, reject) => {
-    console.log("loginAPI 실행");
     chrome.identity.getAuthToken(
       { interactive: true, scopes: SCOPES },
       async (token) => {
@@ -48,10 +46,12 @@ export const getTokenWithId = async () => {
         );
 
         const data = await response.json();
+        const family_name =
+          data.family_name == undefined ? "" : data.family_name;
         const userInfo = {
           id: data.id,
           email: data.email,
-          name: data.family_name + data.given_name,
+          name: family_name + data.given_name,
           picture: data.picture,
         };
 

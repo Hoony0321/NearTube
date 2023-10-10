@@ -9,12 +9,16 @@ const HomePage: FC<{ user; clickLogoutBtn }> = ({ user, clickLogoutBtn }) => {
       <div style={{ textAlign: "center" }}>
         <div className="user-info">
           <div className="user-name">{user.name}</div>
-          <div className="user-email">
-            <b>email</b> : {user.email}
+
+          <div style={{ display: "flex" }}>
+            <p style={{ fontWeight: "700", width: "50px" }}>email</p>
+            <p style={{ marginLeft: "1rem" }}>{user.email}</p>
           </div>
+
           <div className="user-location">
             <b>location</b> : {user.location}
           </div>
+
           <div className="user-major">
             <b>job</b> : {user.job}
           </div>

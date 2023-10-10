@@ -38,4 +38,8 @@ public class MemberLocation {
     public void addCount() {
         this.count++;
     }
+
+    public void setCount(int count){
+        this.count = count;
+    }
 }

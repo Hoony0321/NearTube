@@ -17,6 +17,7 @@
             <th scope="col">job</th>
             <th scope="col">interests</th>
             <th scope="col">detail</th>
+            <th scope="col">delete</th>
         </tr>
         </thead>
         <tbody>
@@ -29,6 +30,12 @@
                 <td>
                     <a href="#" th:href="@{/members/{id}/recommend (id=${member.id})}"
                        class="btn btn-primary" role="button">상세보기</a>
+                </td>
+                <td>
+                    <form th:action="@{api/members/{id}/delete (id=${member.id})}" method="post">
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" class="btn btn-danger">삭제</button>
+                    </form>
                 </td>
             </tr>
         </tbody>

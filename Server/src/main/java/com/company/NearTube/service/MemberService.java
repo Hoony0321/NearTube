@@ -5,8 +5,10 @@ import com.company.NearTube.domain.Member;
 import com.company.NearTube.domain.MemberLocation;
 import com.company.NearTube.form.CreateMemberForm;
 import com.company.NearTube.form.SetMemberDetailInfoForm;
+import com.company.NearTube.repository.MemberLocationRepository;
 import com.company.NearTube.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,10 +20,12 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class MemberService {
 
     private final MemberRepository memberRepository;
     private final LocationService locationService;
+    private final MemberLocationRepository memberLocationRepository;
 
     public List<Member> findAll() {
         List<Member> members = memberRepository.findAll();
@@ -44,6 +48,14 @@ public class MemberService {
         for(Location location : locations){
             MemberLocation memberLocation = MemberLocation.createEntity(member, location);
             member.addMemberLocation(memberLocation);
+        }
+
+        for(String location : form.getLocations()){
+            member.getMemberLocations().forEach(memberLocation -> {
+                if(memberLocation.getLocation().getName().equals(location)){
+                    memberLocation.setCount(30);
+                }
+            });
         }
 
         memberRepository.save(member);

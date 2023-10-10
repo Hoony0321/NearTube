@@ -23,6 +23,7 @@ public class KMeanService {
     private final LocationService locationService;
 
     public List<Member>[] clustering(){
+
         //create attribute - TODO : add other attributes
         List<Attribute> attributes = new ArrayList<>();
         List<Location> locations = locationService.findAll();
@@ -37,6 +38,14 @@ public class KMeanService {
         Instances dataset = new Instances("dataset", (ArrayList<Attribute>) attributes, 0);
 
         List<Member> members = memberService.findAll();
+        if(members.size() < 9){
+            throw new RuntimeException("회원이 9명 이상이어야 합니다.");
+        }
+
+        int k = members.size() / 3;
+        if(members.size() % 3 != 0) k += 1;
+        System.out.println("k : " + k);
+
         for(Member member : members){
             //create the instance
             Instance data = new DenseInstance(attributes.size());
@@ -51,30 +60,46 @@ public class KMeanService {
         }
 
         //build the clustering model
-        SimpleKMeans model = new SimpleKMeans();
-        int[] assignments;
-        try {
-//          model.setSeed(10);
-            model.setSeed(255);
-            model.setNumClusters(3);
-            model.setPreserveInstancesOrder(true);
-            model.setDisplayStdDevs(true);
-            model.buildClusterer(dataset);
 
-            assignments = model.getAssignments();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        while(true){
+            int[] assignments;
+            SimpleKMeans model = new SimpleKMeans();
+
+            try {
+//                int randSeed = (int) (Math.random() * 1000);
+//                System.out.println("randSeed : " + randSeed);
+                model.setSeed(48);
+                model.setNumClusters(k);
+                model.setPreserveInstancesOrder(true);
+                model.setDisplayStdDevs(true);
+                model.buildClusterer(dataset);
+
+                assignments = model.getAssignments();
+
+                List<Member>[] clusters = new ArrayList[model.getNumClusters()];
+                for(int i = 0; i < clusters.length; i++){
+                    clusters[i] = new ArrayList<>();
+                }
+
+                for(int i = 0; i < assignments.length; i++){
+                    clusters[assignments[i]].add(members.get(i));
+                }
+
+                // check if there is a cluster that has less than 3 members
+                int countLessThanThree = 0;
+                for(int i = 0; i < clusters.length; i++){
+                    if(clusters[i].size() < 3){
+                        countLessThanThree += 1;
+                    }
+                }
+
+                if(countLessThanThree == 1){
+                    return clusters;
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        List<Member>[] clusters = new ArrayList[model.getNumClusters()];
-        for(int i = 0; i < clusters.length; i++){
-            clusters[i] = new ArrayList<>();
-        }
-
-        for(int i = 0; i < assignments.length; i++){
-            clusters[assignments[i]].add(members.get(i));
-        }
-
-        return clusters;
     }
 }

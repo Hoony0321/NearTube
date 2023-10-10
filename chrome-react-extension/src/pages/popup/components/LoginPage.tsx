@@ -12,12 +12,16 @@ import {
   createMemberAPI,
 } from "../../../common/utils/backendUtils.js";
 import { IUser } from "@src/common/interfaces.js";
+import { locations } from "../locations.type.js";
 
 const LoginPage: FC<{ setUser }> = ({ setUser }) => {
   const [showSignUpPage, setShowSignUpPage] = useState<boolean>(false);
   const [gender, setGender] = useState<string>("");
   const [interests, setInterests] = useState<string>("");
   const [job, setJob] = useState<string>("");
+  const [location1, setLocation1] = useState<string>("");
+  const [location2, setLocation2] = useState<string>("");
+  const [location3, setLocation3] = useState<string>("");
   const [userData, setUserData] = useState(undefined);
 
   const clickLoginBtn = async () => {
@@ -31,7 +35,6 @@ const LoginPage: FC<{ setUser }> = ({ setUser }) => {
 
         //유저 정보 서버에서 가져오기
         const userInfo = await getMemberAPI(userData.id);
-        console.log(userInfo);
 
         //구독 목록 정보 가져와서 저장
         const subscriptions = await getYoutubeSubscriptionsAPI(
@@ -77,7 +80,9 @@ const LoginPage: FC<{ setUser }> = ({ setUser }) => {
   };
 
   const clickSubmitBtn = async () => {
-    console.log("clickSubmitBtn");
+    const { latitude, longitude } = await getCurrentLocation();
+    if (latitude == undefined || longitude == undefined) return;
+
     const userInfo = {
       id: userData.id,
       email: userData.email,
@@ -86,9 +91,9 @@ const LoginPage: FC<{ setUser }> = ({ setUser }) => {
       gender: gender == "남자" ? true : false,
       job: job,
       interests: interests,
+      locations: [location1, location2, location3],
     };
 
-    console.log("userInfo : ", userInfo);
     await createMemberAPI(userInfo);
 
     setShowSignUpPage(false);
@@ -104,36 +109,95 @@ const LoginPage: FC<{ setUser }> = ({ setUser }) => {
         <>
           <p className="logo-title">Sign Up</p>
           <div>
-            <input
-              className="input"
-              type="text"
-              placeholder="Job"
-              onChange={(e) => {
-                () => {
+            <div className="input-container">
+              <label style={{ fontSize: "1rem", fontWeight: 600 }}>전공</label>
+              <input
+                className="input"
+                type="text"
+                placeholder="Major"
+                value={job}
+                onChange={(e) => {
                   setJob(e.target.value);
-                };
-              }}
-            />
-            <input
-              className="input"
-              type="text"
-              placeholder="Gender"
-              onChange={(e) => {
-                () => {
-                  setGender(e.target.value);
-                };
-              }}
-            />
-            <input
-              className="input"
-              type="text"
-              placeholder="interests"
-              onChange={(e) => {
-                () => {
+                }}
+              />
+            </div>
+
+            <div className="input-container">
+              <label style={{ fontSize: "1rem", fontWeight: 600 }}>
+                관심사
+              </label>
+              <input
+                className="input"
+                type="text"
+                placeholder="interests"
+                value={interests}
+                onChange={(e) => {
                   setInterests(e.target.value);
-                };
-              }}
-            />
+                }}
+              ></input>
+            </div>
+
+            <div className="input-container">
+              <label style={{ fontSize: "1rem", fontWeight: 600 }}>성별</label>
+              <select
+                className="input"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              >
+                <option value="NONE">성별을 선택해주세요.</option>
+                <option value="남자">남자</option>
+                <option value="여자">여자</option>
+              </select>
+            </div>
+
+            <div className="input-container">
+              <label style={{ fontSize: "1rem", fontWeight: 600 }}>장소1</label>
+              <select
+                className="input"
+                value={location1}
+                onChange={(e) => setLocation1(e.target.value)}
+              >
+                <option value="NONE">자주 이용하는 장소를 선택해주세요</option>
+                {locations.map((loc) => (
+                  <option key={loc.name} value={loc.name}>
+                    {loc.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="input-container">
+              <label style={{ fontSize: "1rem", fontWeight: 600 }}>장소2</label>
+              <select
+                className="input"
+                value={location2}
+                onChange={(e) => setLocation2(e.target.value)}
+              >
+                <option value="NONE">자주 이용하는 장소를 선택해주세요</option>
+                {locations.map((loc) => (
+                  <option key={loc.name} value={loc.name}>
+                    {loc.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="input-container">
+              <label style={{ fontSize: "1rem", fontWeight: 600 }}>장소3</label>
+              <select
+                className="input"
+                value={location3}
+                onChange={(e) => setLocation3(e.target.value)}
+              >
+                <option value="NONE">자주 이용하는 장소를 선택해주세요</option>
+                {locations.map((loc) => (
+                  <option key={loc.name} value={loc.name}>
+                    {loc.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div className="btn-container">
               <button className="btn" onClick={clickCancelBtn}>
                 Cancel

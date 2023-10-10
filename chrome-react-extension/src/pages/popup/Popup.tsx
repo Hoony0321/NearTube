@@ -9,15 +9,12 @@ const Popup: FC<{ propsUser: IUser }> = ({ propsUser }) => {
   const [user, setUser] = useState<IUser>(undefined);
 
   useEffect(() => {
-    console.log("popup init");
-    console.log("propsUser : ", propsUser);
     if (propsUser != null && propsUser != undefined) {
       setUser(propsUser);
     }
   }, []);
 
   const clickLogoutBtn = async () => {
-    console.log("logout");
     setUser(undefined);
     await chrome.storage.local.set({
       user: null,

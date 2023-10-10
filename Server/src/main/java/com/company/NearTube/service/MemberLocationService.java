@@ -3,6 +3,7 @@ package com.company.NearTube.service;
 import com.company.NearTube.domain.Location;
 import com.company.NearTube.domain.Member;
 import com.company.NearTube.domain.MemberLocation;
+import com.company.NearTube.dto.MemberLocationDto;
 import com.company.NearTube.form.Point;
 import com.company.NearTube.repository.MemberLocationRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,18 @@ public class MemberLocationService {
         }
 
         return _memberLocation;
+    }
+
+
+    // for test
+    @Transactional
+    public void updateMemberLocation(Member member, List<MemberLocationDto> memberLocationDtos){
+        memberLocationDtos.forEach(memberLocationDto -> {
+            member.getMemberLocations().forEach(memberLocation -> {
+                if(memberLocation.getLocation().getName().equals(memberLocationDto.getName())){
+                    memberLocation.setCount(memberLocationDto.getCount());
+                }
+            });
+        });
     }
 }
