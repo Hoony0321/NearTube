@@ -1,9 +1,11 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/nearTube?serverTimezone=UTC
     username: root
-    password: 1234
+#    url: jdbc:mysql://localhost:3306/neartube_db?serverTimezone=UTC
+#    password: 1234
+    url: jdbc:mysql://neartube-db.cwu3g6r2cdah.ap-northeast-2.rds.amazonaws.com:3306/neartube_db?serverTimezone=UTC
+    password: neartube
 
   jpa:
     hibernate:
@@ -21,3 +23,4 @@ logging:
   level:
     org.hibernate.type: trace
     org.hibernate.type.descriptor.sql: trace
+    root: info
