@@ -26,6 +26,7 @@ export const getCurrentLocation = async () => {
   }
 };
 
+// OAuth 로그인 - Google API 사용
 export const getTokenWithId = async () => {
   return new Promise((resolve, reject) => {
     chrome.identity.getAuthToken(

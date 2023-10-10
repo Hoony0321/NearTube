@@ -4,6 +4,7 @@ import {
   getClusterAPI,
   searchClusterAPI,
 } from "../../../../common/utils/backendUtils.js";
+import { checkVideoStatus } from "../../../../common/utils/youtubeUtils.js";
 import VideoItem from "./VideoItem.js";
 import ChannelItem from "./ChannelItem.js";
 import { IGroup } from "@src/common/interfaces.js";
@@ -69,6 +70,15 @@ const App = () => {
     }
 
     setChannels(data.channels);
+
+    // check video status
+    const statuses = await Promise.all(
+      data.videos.map((video) => checkVideoStatus(video.id))
+    );
+
+    // filter videos
+    data.videos = data.videos.filter((video, index) => statuses[index]);
+
     setVideos(data.videos);
 
     const group: IGroup = {

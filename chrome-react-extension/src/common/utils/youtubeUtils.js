@@ -132,3 +132,13 @@ export const getTopVideos = () => {
     });
   };
 };
+
+export const checkVideoStatus = async (videoId) => {
+  const data = await getVideoInfoByAPI(videoId);
+
+  if (data == undefined) return false;
+  if (data.items.length == 0) {
+    return false;
+  }
+  return true;
+};
