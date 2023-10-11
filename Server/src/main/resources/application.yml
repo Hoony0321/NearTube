@@ -16,7 +16,11 @@ spring:
         use_sql_comments: true
         show_sql: true
 
-
+server:
+  servlet:
+    redirect-context-root: false
+    redirect-port: 443
+    redirect-scheme: https
 
 
 logging:
