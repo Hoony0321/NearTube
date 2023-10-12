@@ -9,12 +9,16 @@ echo "Step 2: Gradle Build"
 ./gradlew build
 
 # 3. 기존 프로세스를 종료합니다.
-echo "Step 3: Stopping Existing Process"
-pkill -f "java -jar NearTube-0.0.1-SNAPSHOT.jar"
-
-# 4. 5초 대기
-echo "Waiting for 5 seconds..."
-sleep 5
+# 현재 실행 중인 프로세스의 PID를 찾습니다.
+PID=$(pgrep -f "java -jar NearTube-0.0.1-SNAPSHOT.jar")
+if [ -n "$PID" ]; then
+  echo "Killing process with PID $PID"
+  kill "$PID"
+  sleep 10  # 프로세스 종료를 기다릴 시간 (필요에 따라 조정)
+  echo "Process killed successfully"
+else
+  echo "No matching process found"
+fi
 
 # 5. 새로운 프로세스를 시작합니다.
 echo "Step 4: Starting New Process"
