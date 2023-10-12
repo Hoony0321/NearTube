@@ -10,10 +10,10 @@ echo "Step 2: Gradle Build"
 
 # 3. 기존 프로세스를 종료합니다.
 # 현재 실행 중인 프로세스의 PID를 찾습니다.
-PID=$(pgrep -f "java -jar NearTube-0.0.1-SNAPSHOT.jar")
+PID=$(sudo pgrep -f "java -jar NearTube-0.0.1-SNAPSHOT.jar")
 if [ -n "$PID" ]; then
   echo "Killing process with PID $PID"
-  kill "$PID"
+  sudo kill "$PID"
   sleep 10  # 프로세스 종료를 기다릴 시간 (필요에 따라 조정)
   echo "Process killed successfully"
 else
