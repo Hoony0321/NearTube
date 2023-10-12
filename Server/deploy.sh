@@ -12,7 +12,11 @@ echo "Step 2: Gradle Build"
 echo "Step 3: Stopping Existing Process"
 pkill -f "java -jar NearTube-0.0.1-SNAPSHOT.jar"
 
-# 4. 새로운 프로세스를 시작합니다.
+# 4. 5초 대기
+echo "Waiting for 5 seconds..."
+sleep 5
+
+# 5. 새로운 프로세스를 시작합니다.
 echo "Step 4: Starting New Process"
 nohup java -jar build/libs/NearTube-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
 
